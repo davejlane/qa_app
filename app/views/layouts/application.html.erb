@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Q&A App" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <nav class="top-bar" data-topbar="">
+      <ul class="title-area row">
+        <li class="name left">
+          <h1 class='logo'><a href="/">Q & A App</a></h1>
+        </li>
+        <li class="right">
+        <% if !current_user.present? %>
+          <%= link_to "Sign Up", new_user_registration_path %>
+          <%= link_to "Sign In", new_user_session_path %>
+        <% else %>
+          <%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
+        <% end %>
+        </li>
+      </ul>
+      <div class="right">
+        <ul>
+
+        </ul>
+      </div>
+    </nav>
+    <div class="row main">
+      <div class="small-12 columns">
+        <% flash.each do |key, value| %>
+          <div class="alert-box  <%= flash_class(key) %>">
+                <%= value %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </div>
+    <%= javascript_include_tag "application" %>
+  </body>
+</html>
